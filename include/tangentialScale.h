@@ -6,6 +6,7 @@
 
 class tangentialScalePos: public newSe{
     double m_T;
+    double m_quart;
     interpolater1d m_spline;        //spline through (0,0)
     double m_asymptoticCoefficient;
     double m_quadraticCoefficient;
@@ -27,6 +28,7 @@ public:
 
 class tangentialScaleNeg: public newSe{
     double m_T;
+    double m_quart;
     interpolater1d m_spline;        // spline through (0,0)
     double m_asymptoticCoefficient;
     double m_quadraticCoefficient;

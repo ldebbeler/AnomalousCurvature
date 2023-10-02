@@ -34,15 +34,15 @@ int main(int argc, char** argv){
     }
 */
 
-    newSe foo(at);
+    //newSe foo(at);
 
-    //radialScalePos foo(at);
-    //radialScaleNeg fooNeg(at);
+    radialScalePos foo(at);
+    radialScaleNeg fooNeg(at);
 
-    //seRad ser(foo, fooNeg);
+    seRad ser(foo, fooNeg);
 
 
-    //std::cout << "Objects created.\n";
+    std::cout << "Objects created.\n";
 
     std::vector<double> x(201);
     std::vector<double> imag(201);
@@ -55,17 +55,17 @@ int main(int argc, char** argv){
     for(std::size_t i=0; i<x.size(); i++){
         double y{ -5.0 + i*0.05 };
         x[i] = y;
-        //imag[i] = foo.bubbleScale(y).imag();
+        imag[i] = foo.bubbleScale(y).imag();
         //imag[i] = foo.exactBubbleQuartic(y).imag();
-        //real[i] = foo.bubbleScale(y).real();
+        real[i] = foo.bubbleScale(y).real();
         //real[i] = foo.exactBubbleQuartic(y).real();
-        //imagDeriv[i] = foo.imagBubbleDeriv(y);
-        //arPos[i] = foo.arPos(y);
-        //arNeg[i] = foo.arNeg(y);
-        //radInterPos[i] = foo.evaluate(y);
-        //radInterNeg[i] = fooNeg.evaluate(y);
+        imagDeriv[i] = foo.imagBubbleDeriv(y);
+        arPos[i] = foo.arPos(y);
+        arNeg[i] = foo.arNeg(y);
+        radInterPos[i] = foo.evaluate(y);
+        radInterNeg[i] = fooNeg.evaluate(y);
     }
-    //std::cout << "Radial Scale Function.\n";
+    std::cout << "Radial Scale Function.\n";
 
     scalingValues bar;
     bar.m_x = x;
@@ -74,8 +74,8 @@ int main(int argc, char** argv){
     bar.m_imagDeriv = imagDeriv;
     bar.m_arPos = arPos;
     bar.m_arNeg = arNeg;
-    //bar.m_apos = foo.Apos();
-    //bar.m_aneg = foo.Aneg();
+    bar.m_apos = foo.Apos();
+    bar.m_aneg = foo.Aneg();
     bar.m_radInterPos = radInterPos;
     bar.m_radInterNeg = radInterNeg;
     bar.m_T = at;
@@ -91,11 +91,11 @@ int main(int argc, char** argv){
     for(std::size_t i=0; i<kr.size(); i++){
         double k{ a*std::pow(base,i) };
         kr[i] = k;
-        //sePos[i] = ser.radValue(k);
-        //seNeg[i] = ser.radValue(-k);
+        sePos[i] = ser.radValue(k);
+        seNeg[i] = ser.radValue(-k);
     }
 
-    //std::cout << "Radial Self-Energy.\n";
+    std::cout << "Radial Self-Energy.\n";
 
     std::vector<double> ktilde(501);
     std::vector<double> tangPos(501);

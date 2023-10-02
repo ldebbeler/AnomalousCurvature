@@ -19,11 +19,12 @@ echo "Compilation finished!"
 echo
 
 #./bin/Newrg.elf 400
-#for (( i = 400; i>=205; i-=10));
-#do
-#    echo $i
-#    ./bin/Newrg.elf $i
-#done
+#
+for (( i = 400; i>=205; i-=5));
+do
+    echo $i
+    ./bin/Newrg.elf $i
+done
 
 echo "Program executed!"
 

@@ -6,7 +6,7 @@
 #include <complex>
 
 //const std::string fileName{ "data/foo108.h5" };
-const std::string prefix{ "data/expandedTang" };
+const std::string prefix{ "data/fullCalculation" };
 const std::string suffix{ ".h5" };
 
 //const std::string name{ "data/numBubble3.h5" };
@@ -38,7 +38,7 @@ inline constexpr double UVTang{ 1e8 };      //fix 1e8
 // assembly of scaling function. Interpolation in [-Lambda, Lambda], extrapolation beyond
 inline constexpr int nodes{ 5001 };
 //inline constexpr int nodes{ 51 };
-inline constexpr double Lambda{ 500.0 };        // 100 leads to smooth tangential scaling function
+inline constexpr double Lambda{ 500.0 };        // 500 leads to smooth tangential scaling function
 // bubble calculation via scaling function
 // specification for 2d integral (hcubature)
 inline constexpr double prec2d{ 1e-10 };
@@ -59,7 +59,7 @@ inline constexpr double LambdaT{ 5.0 };     // 5.0 seems good, 7.0 as well
 inline constexpr int quarticNodes{ 200 };   // 200 seems like a good value
 inline constexpr double maxValue{ 1.0 };    // careful, this is very sensitive. 1.0
 // value below which quartic approx
-inline constexpr double quart{ 0.5 };       // 0.7, below alpha=2.5 should be decreased e.g. 0.5
+//inline constexpr double quart{ 0.7 };       // 0.7, below alpha=2.5 should be decreased e.g. 0.5
 
 /*
 // specification for grid of scaling funcion
