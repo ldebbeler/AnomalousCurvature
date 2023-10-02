@@ -1,47 +1,71 @@
-//File: selfenergy.h
-#ifndef SELFENERGY_H
-#define SELFENERGY_H
+//File: newSe.h
+#ifndef NEWSE_H
+#define NEWSE_H
 
-#include "bubble.h"
+#include "bubbleScale.h"
 
-class selfenergy{
-    double m_T;
-    bubble m_bubble;
+template <typename T> int sgn(T val){
+    return (T(0) < val) - (val < T(0));
+}
+
+class newSe{
 public:
-    /*
-    double dispersion(double qr, double qt);
-    double dispersion(double kr, double qr, double kt, double qt);
-    */
+    double m_T;
+    bubbleScaleReal m_scaleReal;
+    bubbleScaleImag m_scaleImag;
 
-    selfenergy(double T, bubble foo);
+    newSe(double T);
+    
+    std::complex<double> bubbleScale(double x);
+    std::complex<double> exactBubbleQuartic(double x);
+    double imagBubbleDeriv(double x);
+    double exactDerivQuartic(double x);
 
-    // explicite imaginary part of the self energy
-    std::complex<double> integrandPos(double omega, double kr, double kt, double qr, double qt);
-    std::complex<double> integrandPosLog(double omega, double kr, double kt, double qr, double Q);
-    std::complex<double> integrandNeg(double omega, double kr, double kt, double qr, double qt);
-    std::complex<double> integrandNegLog(double omega, double kr, double kt, double qr, double Q);
-    std::complex<double> integralLog(double omega, double kr, double kt);
+    // frequency dependence
+    std::complex<double> freqIntegrandPos(double qr, double qt);
+    std::complex<double> freqIntegrandNeg(double qr, double qt);
 
-    double freqScalePos();
-    double freqScaleNeg();
+    double Apos();
+    double Aneg();
 
-    // scalingfunctions for radial dependence
-    std::complex<double> integrandPosx(double qr, double qt, double x);
-    std::complex<double> integrandPosLogx(double qr, double Qt, double x);
-    double integralPosx(double x);
-    std::complex<double> integrandNegx(double qr, double qt, double x);
-    std::complex<double> integrandNegLogx(double qr, double Qt, double x);
-    double integralNegx(double x);
+    // radial momentum dependence
+    std::complex<double> radIntegrandPos(double qr, double qt, double kr);
+    std::complex<double> radIntegrandNeg(double qr, double qt, double kr);
 
-    // scalingfunctions for tangential dependence
-    std::complex<double> integrandPosTang(double qr, double qt, double x);
-    std::complex<double> integrandPosLogTang(double qr, double Qt, double x);
-    double integralPosTang(double x);
-    std::complex<double> integrandNegTang(double qr, double qt, double x);
-    std::complex<double> integrandNegLogTang(double qr, double Qt, double x);
-    double integralNegTang(double x);
+    double arPos(double kr);
+    double arNeg(double kr);
 
+    interpolater1d radPosSpline();
+    interpolater1d radNegSpline();
 
+    // same coefficient of asymptotic behavior for positive or negative frequencies
+    double asymptoticIntegrand(double qt, double sk);
+    double radAsymptoticPos();
+    double radAsymptoticNeg();
+
+    // tangential momentum dependence
+    std::complex<double> tangIntegrandPos(double qr, double qt, double kt);
+    std::complex<double> tangIntegrandNeg(double qr, double qt, double kt);
+
+    double atPos(double kt);
+    double atNeg(double kt);
+
+    double atPosSubtract(double kt);
+    double atNegSubtract(double kt);
+
+    interpolater1d tangPosSpline();
+    interpolater1d tangNegSpline();
+
+    // asymptotic behavior same for positive and negative frequencies. Symmetric w.r.t. kt
+    double tangAsymptoticIntegrand(double qt);
+    double tangAsymptotic();
+
+    double posQuadratic();
+    double negQuadratic();
+
+    double posQuartic();
+    double negQuartic();
 };
 
-#endif //SELFENERGY_H
+
+#endif //NEWSE_H

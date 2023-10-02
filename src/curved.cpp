@@ -2,9 +2,9 @@
 #include<iomanip>
 #include "scaleEqns.h"
 #include "datastructs.h"
-#include "writeNew.h"
+#include "writeFile.h"
 #include "bubbleScale.h"
-#include "newSe.h"
+#include "selfenergy.h"
 #include "radialScale.h"
 #include "seRad.h"
 #include "seTang.h"

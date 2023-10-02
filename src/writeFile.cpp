@@ -1,4 +1,4 @@
-#include "writeNew.h"
+#include "writeFile.h"
 #include <boost/multi_array.hpp>
 #include <iostream>
 #include "constants.h"

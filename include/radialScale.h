@@ -2,7 +2,7 @@
 #ifndef RADIALSCALE_H
 #define RADIALSCALE_H
 
-#include "newSe.h"
+#include "selfenergy.h"
 
 class radialScalePos: public newSe{
     interpolater1d m_spline;

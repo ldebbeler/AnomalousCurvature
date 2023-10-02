@@ -2,7 +2,7 @@
 #ifndef TANGENTIALSCALE_H
 #define TANGENTIALSCALE_H
 
-#include "newSe.h"
+#include "selfenergy.h"
 
 class tangentialScalePos: public newSe{
     double m_T;

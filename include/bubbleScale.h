@@ -2,7 +2,7 @@
 #ifndef BUBBLESCALE_H
 #define BUBBLESCALE_H
 
-#include "scaleFunction.h"
+//#include "scaleFunction.h"
 #include "scaleEqns.h"
 
 class bubbleScaleReal: public scaleEqns{
