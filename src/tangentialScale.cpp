@@ -21,6 +21,11 @@ double tangentialScalePos::evaluate(double kt){
     }
 }
 
+double tangentialScalePos::getQuadratic(){
+    return m_quadraticCoefficient;
+}
+
+
 double tangentialScalePos::getQuartic(){
     return m_quarticCoefficient;
 }
@@ -54,6 +59,9 @@ double tangentialScaleNeg::getQuartic(){
     return m_quarticCoefficient;
 }
 
+double tangentialScaleNeg::getQuadratic(){
+    return m_quadraticCoefficient;
+}
 double tangentialScaleNeg::freqFunction(double omega){
     return evaluate(std::pow(b/omega,1.0/m_T));
 }

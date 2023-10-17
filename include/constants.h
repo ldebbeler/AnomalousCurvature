@@ -6,7 +6,7 @@
 #include <complex>
 
 //const std::string fileName{ "data/foo108.h5" };
-const std::string prefix{ "data/fullCalculation" };
+const std::string prefix{ "data/coefficientC" };
 const std::string suffix{ ".h5" };
 
 //const std::string name{ "data/numBubble3.h5" };

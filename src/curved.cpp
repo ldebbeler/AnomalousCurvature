@@ -42,7 +42,7 @@ int main(int argc, char** argv){
     seRad ser(foo, fooNeg);
 
 
-    std::cout << "Objects created.\n";
+    //std::cout << "Objects created.\n";
 
     std::vector<double> x(201);
     std::vector<double> imag(201);
@@ -65,7 +65,7 @@ int main(int argc, char** argv){
         radInterPos[i] = foo.evaluate(y);
         radInterNeg[i] = fooNeg.evaluate(y);
     }
-    std::cout << "Radial Scale Function.\n";
+    //std::cout << "Radial Scale Function.\n";
 
     scalingValues bar;
     bar.m_x = x;
@@ -95,7 +95,7 @@ int main(int argc, char** argv){
         seNeg[i] = ser.radValue(-k);
     }
 
-    std::cout << "Radial Self-Energy.\n";
+    //std::cout << "Radial Self-Energy.\n";
 
     std::vector<double> ktilde(501);
     std::vector<double> tangPos(501);
@@ -139,8 +139,10 @@ int main(int argc, char** argv){
     bar.m_tangFreqNeg = freqNeg;
     bar.m_DPos = set.m_scalePos.getQuartic();
     bar.m_DNeg = set.m_scaleNeg.getQuartic();
+    bar.m_CPos = set.m_scalePos.getQuadratic();
+    bar.m_CNeg = set.m_scaleNeg.getQuadratic();
 
-    std::cout << "Tangential ScaleFunction.\n";
+    //std::cout << "Tangential ScaleFunction.\n";
 
     std::vector<double> kt(50);
     std::vector<double> seTang(50);
@@ -152,7 +154,7 @@ int main(int argc, char** argv){
         kt[i] = k;
         seTang[i] = set.tangValue(k);
     }
-    std::cout << "Tangential SelfEnergy.\n";
+    //std::cout << "Tangential SelfEnergy.\n";
 
     bar.m_kr = kr;
     bar.m_kt = kt;

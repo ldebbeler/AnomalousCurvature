@@ -107,5 +107,11 @@ void writeNew::writeMainResults(H5::H5File file){
     H5::Attribute dneg = seTang.createAttribute("DNeg", double_type, att_space);
     dneg.write( double_type, &m_scaling.m_DNeg);
  
+    H5::Attribute cpos = seTang.createAttribute("CPos", double_type, att_space);
+    cpos.write( double_type, &m_scaling.m_CPos);
+ 
+    H5::Attribute cneg = seTang.createAttribute("CNeg", double_type, att_space);
+    cneg.write( double_type, &m_scaling.m_CNeg);
+ 
 }
 

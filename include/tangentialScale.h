@@ -22,6 +22,7 @@ public:
     double evaluate(double kt);
 
     double getQuartic();
+    double getQuadratic();
 
     double freqFunction(double omega);
 };
@@ -44,6 +45,7 @@ public:
     double evaluate(double kt);
 
     double getQuartic();
+    double getQuadratic();
 
     double freqFunction(double omega);
 };

@@ -20,11 +20,11 @@ echo
 
 #./bin/Curved.elf 400
 
-#for (( i = 400; i>=205; i-=5));
-#do
-    #echo $i
-    #./bin/Curved.elf $i
-#done
+for (( i = 400; i>=205; i-=5));
+do
+    echo $i
+    ./bin/Curved.elf $i
+done
 
 echo "Program executed!"
 
