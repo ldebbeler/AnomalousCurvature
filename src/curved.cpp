@@ -141,6 +141,7 @@ int main(int argc, char** argv){
     bar.m_DNeg = set.m_scaleNeg.getQuartic();
     bar.m_CPos = set.m_scalePos.getQuadratic();
     bar.m_CNeg = set.m_scaleNeg.getQuadratic();
+    bar.m_deltab = set.deltab();
 
     //std::cout << "Tangential ScaleFunction.\n";
 

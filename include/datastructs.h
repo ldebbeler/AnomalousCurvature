@@ -36,6 +36,7 @@ struct scalingValues{
     double m_DNeg;
     double m_CPos;
     double m_CNeg;
+    double m_deltab;
 
     // tangential self energy
     std::vector<double> m_kt;

@@ -112,6 +112,9 @@ void writeNew::writeMainResults(H5::H5File file){
  
     H5::Attribute cneg = seTang.createAttribute("CNeg", double_type, att_space);
     cneg.write( double_type, &m_scaling.m_CNeg);
+
+    H5::Attribute deltab = seTang.createAttribute("deltab", double_type, att_space);
+    deltab.write( double_type, &m_scaling.m_deltab);
  
 }
 
