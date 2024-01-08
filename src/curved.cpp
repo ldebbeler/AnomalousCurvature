@@ -36,42 +36,50 @@ int main(int argc, char** argv){
 
     //newSe foo(at);
 
-    radialScalePos foo(at);
-    radialScaleNeg fooNeg(at);
+    scaleEqns bubbleScale(at);
 
-    seRad ser(foo, fooNeg);
+    //radialScalePos foo(at);
+    //radialScaleNeg fooNeg(at);
+
+    //seRad ser(foo, fooNeg);
 
 
     //std::cout << "Objects created.\n";
 
-    std::vector<double> x(201);
-    std::vector<double> imag(201);
-    std::vector<double> real(201);
-    std::vector<double> imagDeriv(201);
-    std::vector<double> arPos(201);
-    std::vector<double> arNeg(201);
-    std::vector<double> radInterPos(201);
-    std::vector<double> radInterNeg(201);
+    std::vector<double> x(1001);
+    std::vector<double> imag(1001);
+    std::vector<double> real(1001);
+    std::vector<double> imagDeriv(1001);
+    //std::vector<double> arPos(101);
+    //std::vector<double> arNeg(101);
+    //std::vector<double> radInterPos(101);
+    //std::vector<double> radInterNeg(101);
     for(std::size_t i=0; i<x.size(); i++){
-        double y{ -5.0 + i*0.05 };
+        double y{ -5.001 + std::pow(2.0,1.0-at) + i*0.01 };
         x[i] = y;
-        imag[i] = foo.bubbleScale(y).imag();
+        //std::cout << y << '\t';
+        imag[i] = bubbleScale.imagValue(y);
         //imag[i] = foo.exactBubbleQuartic(y).imag();
-        real[i] = foo.bubbleScale(y).real();
+        real[i] = bubbleScale.realValue(y);
         //real[i] = foo.exactBubbleQuartic(y).real();
+        /*
         imagDeriv[i] = foo.imagBubbleDeriv(y);
         arPos[i] = foo.arPos(y);
         arNeg[i] = foo.arNeg(y);
         radInterPos[i] = foo.evaluate(y);
         radInterNeg[i] = fooNeg.evaluate(y);
+        */
     }
     //std::cout << "Radial Scale Function.\n";
 
     scalingValues bar;
+
     bar.m_x = x;
     bar.m_imag = imag;
     bar.m_real = real;
     bar.m_imagDeriv = imagDeriv;
+
+    /*
     bar.m_arPos = arPos;
     bar.m_arNeg = arNeg;
     bar.m_apos = foo.Apos();
@@ -111,7 +119,7 @@ int main(int argc, char** argv){
     bar.m_atPos = tangPos;
     bar.m_atNeg = tangNeg;
 
-    seTang set(at);
+    //seTang set(at);
 
     std::vector<double> interk(501);
     std::vector<double> subtractPos(501);
@@ -162,6 +170,7 @@ int main(int argc, char** argv){
     bar.m_seRadPos = sePos;
     bar.m_seRadNeg = seNeg;
     bar.m_seTang = seTang;
+    */
 
     writeNew write(bar);
     

@@ -17,7 +17,7 @@ double scaleEqns::ktzero(double x){
 }
 
 double scaleEqns::imagValue(double x){
-    if(x>std::pow(2,1-m_T)){
+    if(x>std::pow(2,1-m_T)+ 0.001){
         return -ktzero(x)/M_PI;
     }
     else{

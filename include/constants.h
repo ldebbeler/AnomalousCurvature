@@ -6,7 +6,7 @@
 #include <complex>
 
 //const std::string fileName{ "data/foo108.h5" };
-const std::string prefix{ "data/deltab" };
+const std::string prefix{ "data/bubbleScale" };
 const std::string suffix{ ".h5" };
 
 //const std::string name{ "data/numBubble3.h5" };
@@ -27,7 +27,7 @@ inline constexpr double epsrel { 1e-3 };
 inline constexpr int max_iter{ 100 };
 inline constexpr double eps{ 1e-4 };
 // 1d integral:
-inline constexpr double IR{ 1e-5 }; // lower cutoff for k Integral Bubble (scaling Function and extrapolation coefficients)
+inline constexpr double IR{ 1e-10 }; // lower cutoff for k Integral Bubble (scaling Function and extrapolation coefficients)
 inline constexpr double UV{ 1e5 };
 inline constexpr int steps{ 200000 };
 inline constexpr double precision{ 1e-5 };
