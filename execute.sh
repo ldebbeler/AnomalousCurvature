@@ -18,9 +18,9 @@ g++ -std=c++17 -Wall -g -pedantic -I ./include  \
 echo "Compilation finished!"
 echo
 
-./bin/Curved.elf 200
+./bin/Curved.elf 399
 
-#for (( i = 400; i>=205; i-=5));
+#for (( i = 245; i>=205; i-=5));
 #do
     #echo $i
     #./bin/Curved.elf $i

@@ -38,10 +38,10 @@ int main(int argc, char** argv){
 
     scaleEqns bubbleScale(at);
 
-    //radialScalePos foo(at);
-    //radialScaleNeg fooNeg(at);
+    radialScalePos foo(at);
+    radialScaleNeg fooNeg(at);
 
-    //seRad ser(foo, fooNeg);
+    seRad ser(foo, fooNeg);
 
 
     //std::cout << "Objects created.\n";
@@ -50,10 +50,11 @@ int main(int argc, char** argv){
     std::vector<double> imag(1001);
     std::vector<double> real(1001);
     std::vector<double> imagDeriv(1001);
-    //std::vector<double> arPos(101);
-    //std::vector<double> arNeg(101);
-    //std::vector<double> radInterPos(101);
-    //std::vector<double> radInterNeg(101);
+    std::vector<double> arPos(101);
+    std::vector<double> arNeg(101);
+    std::vector<double> radInterPos(101);
+    std::vector<double> radInterNeg(101);
+    /*
     for(std::size_t i=0; i<x.size(); i++){
         double y{ -5.001 + std::pow(2.0,1.0-at) + i*0.01 };
         x[i] = y;
@@ -62,15 +63,14 @@ int main(int argc, char** argv){
         //imag[i] = foo.exactBubbleQuartic(y).imag();
         real[i] = bubbleScale.realValue(y);
         //real[i] = foo.exactBubbleQuartic(y).real();
-        /*
         imagDeriv[i] = foo.imagBubbleDeriv(y);
         arPos[i] = foo.arPos(y);
         arNeg[i] = foo.arNeg(y);
         radInterPos[i] = foo.evaluate(y);
         radInterNeg[i] = fooNeg.evaluate(y);
-        */
     }
-    //std::cout << "Radial Scale Function.\n";
+    std::cout << "Radial Scale Function.\n";
+    */
 
     scalingValues bar;
 
@@ -79,7 +79,6 @@ int main(int argc, char** argv){
     bar.m_real = real;
     bar.m_imagDeriv = imagDeriv;
 
-    /*
     bar.m_arPos = arPos;
     bar.m_arNeg = arNeg;
     bar.m_apos = foo.Apos();
@@ -88,7 +87,7 @@ int main(int argc, char** argv){
     bar.m_radInterNeg = radInterNeg;
     bar.m_T = at;
 
-    int N{ 50 };
+    //int N{ 50 };
     double a{ 1e-4 };
     double c{ 1.0 };
     double base{ std::exp(std::log(c/a)/(N-1)) };
@@ -96,30 +95,34 @@ int main(int argc, char** argv){
     std::vector<double> kr(50);
     std::vector<double> sePos(50);
     std::vector<double> seNeg(50);
+    /*
     for(std::size_t i=0; i<kr.size(); i++){
         double k{ a*std::pow(base,i) };
         kr[i] = k;
         sePos[i] = ser.radValue(k);
         seNeg[i] = ser.radValue(-k);
     }
+    */
 
     //std::cout << "Radial Self-Energy.\n";
 
     std::vector<double> ktilde(501);
     std::vector<double> tangPos(501);
     std::vector<double> tangNeg(501);
+    /*
     for(std::size_t i=0; i<ktilde.size(); i++){
         double k{ 0.01*i };
         ktilde[i] = k;
         tangPos[i] = foo.atPos(k);
         tangNeg[i] = foo.atNeg(k);
     }
+    */
 
     bar.m_ktilde = ktilde;
     bar.m_atPos = tangPos;
     bar.m_atNeg = tangNeg;
 
-    //seTang set(at);
+    seTang set(at);
 
     std::vector<double> interk(501);
     std::vector<double> subtractPos(501);
@@ -127,6 +130,7 @@ int main(int argc, char** argv){
     std::vector<double> omegas(501);
     std::vector<double> freqPos(501);
     std::vector<double> freqNeg(501);
+    /*
     for(std::size_t i=0; i<interk.size(); i++){
         double k{ 0.01*i };
         interk[i] = k;
@@ -137,6 +141,7 @@ int main(int argc, char** argv){
         freqPos[i] = set.m_scalePos.freqFunction(omeg);
         freqNeg[i] = set.m_scaleNeg.freqFunction(omeg);
     }
+    */
 
 
     bar.m_interk = interk;
@@ -151,18 +156,28 @@ int main(int argc, char** argv){
     bar.m_CNeg = set.m_scaleNeg.getQuadratic();
     bar.m_deltab = set.deltab();
 
-    //std::cout << "Tangential ScaleFunction.\n";
+    /*
+    std::cout << "DP: \t" << bar.m_DPos << '\n';
+    std::cout << "DM: \t" << bar.m_DNeg << '\n';
+    std::cout << "CP: \t" << bar.m_CPos << '\n';
+    std::cout << "CM: \t" << bar.m_CNeg << '\n';
+    std::cout << "deltab: \t" << bar.m_deltab << '\n';
+
+    std::cout << "Tangential ScaleFunction.\n";
+    */
 
     std::vector<double> kt(50);
     std::vector<double> seTang(50);
     a = std::pow(10,-2);
     c = 0.1;
     base = std::exp(std::log(c/a)/(N-1));
+    /*
     for(std::size_t i=0; i<kt.size(); i++){
         double k{ a*std::pow(base,i) };
         kt[i] = k;
         seTang[i] = set.tangValue(k);
     }
+    */
     //std::cout << "Tangential SelfEnergy.\n";
 
     bar.m_kr = kr;
@@ -170,7 +185,6 @@ int main(int argc, char** argv){
     bar.m_seRadPos = sePos;
     bar.m_seRadNeg = seNeg;
     bar.m_seTang = seTang;
-    */
 
     writeNew write(bar);
     

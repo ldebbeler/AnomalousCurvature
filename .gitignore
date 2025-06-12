@@ -1,1 +1,6 @@
 /data/.ipynb_checkpoints/
+/bin/
+/data/*.png
+/data/*.pdf
+/data/*.h5
+/data/Graphics/*.pdf
