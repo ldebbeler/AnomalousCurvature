@@ -5,19 +5,17 @@
 #include "writeFile.h"
 #include "bubbleScale.h"
 #include "selfenergy.h"
-#include "radialScale.h"
-#include "seRad.h"
-#include "seTang.h"
+//#include "radialScale.h"
+//#include "seRad.h"
+//#include "seTang.h"
 #include "timer.hpp"
 
 int main(int argc, char** argv){
     Timer t;
 
-    //for(int i = 0; i<41; i++){
+    //pass alpha*100 as command line input
     int ID{ std::stoi(argv[1]) };
-    //int ID = (int)( 400 - 5*i );
     double at{ ID*0.01 };
-    //double at{ 2.5 };
 
     std::string fileID{ std::to_string(ID) };
     std::string name{ prefix + fileID + suffix };
@@ -35,9 +33,60 @@ int main(int argc, char** argv){
 */
 
     //newSe foo(at);
+    // scaling form of bubble
+    bubbleScaleReal realBubble(at);
+    bubbleScaleImag imagBubble(at);
+    // calculate scaling function
+    std::vector<double> x_bscale(101);
+    std::vector<double> imag_bscale(101);
+    std::vector<double> real_bscale(101);
+    for(std::size_t i=0; i<x_bscale.size(); i++){
+        double x{ -5.001 + i*0.1 };
+        x_bscale[i] = x;
+        imag_bscale[i] = realBubble.evaluate(x);
+        real_bscale[i] = imagBubble.evaluate(x);
+    }
 
-    scaleEqns bubbleScale(at);
+    // frequency coefficient of self energy
+    newSe se(at);
+    double Apos{ se.Apos() };
+    double Aneg{ se.Aneg() };
+    std::cout << Apos << '\n';
+    std::cout << Aneg << '\n';
 
+
+    // radial momentum scaling function of self energy
+    std::vector<double> krt(101);
+    std::vector<double> arPos(101);
+    std::vector<double> arNeg(101);
+    for(std::size_t i=0; i<krt.size(); i++){
+        double arg{ -5.0 + 0.1*i };
+        krt[i] = arg;
+        //arPos[i] = se.arPos(arg);
+        //arNeg[i] = se.arNeg(arg);
+    }
+
+    // tangential momentum scaling function of self energy
+    std::vector<double> ktt(101);
+    std::vector<double> atPos(101);
+    std::vector<double> atNeg(101);
+    for(std::size_t i=0; i<ktt.size(); i++){
+        double arg{ 0.05*i };
+        ktt[i] = arg;
+        atPos[i] = se.atPos(arg);
+        atNeg[i] = se.atNeg(arg);
+        std::cout << ktt[i] << '\t' << atPos[i] << '\t' << atNeg[i] << '\n';
+    }
+
+    // store results in datastructs
+    // calculate important coefficients, aside from Apos and Aneg
+    // i.e. B,C,D and potentially etas
+
+
+
+    /*
+
+    // radial momentum dependent self energy
     radialScalePos foo(at);
     radialScaleNeg fooNeg(at);
 
@@ -46,14 +95,11 @@ int main(int argc, char** argv){
 
     //std::cout << "Objects created.\n";
 
-    std::vector<double> x(1001);
-    std::vector<double> imag(1001);
-    std::vector<double> real(1001);
-    std::vector<double> imagDeriv(1001);
-    std::vector<double> arPos(101);
+   std::vector<double> arPos(101);
     std::vector<double> arNeg(101);
     std::vector<double> radInterPos(101);
     std::vector<double> radInterNeg(101);
+    */
     /*
     for(std::size_t i=0; i<x.size(); i++){
         double y{ -5.001 + std::pow(2.0,1.0-at) + i*0.01 };
@@ -70,7 +116,6 @@ int main(int argc, char** argv){
         radInterNeg[i] = fooNeg.evaluate(y);
     }
     std::cout << "Radial Scale Function.\n";
-    */
 
     scalingValues bar;
 
@@ -95,28 +140,24 @@ int main(int argc, char** argv){
     std::vector<double> kr(50);
     std::vector<double> sePos(50);
     std::vector<double> seNeg(50);
-    /*
     for(std::size_t i=0; i<kr.size(); i++){
         double k{ a*std::pow(base,i) };
         kr[i] = k;
         sePos[i] = ser.radValue(k);
         seNeg[i] = ser.radValue(-k);
     }
-    */
 
     //std::cout << "Radial Self-Energy.\n";
 
     std::vector<double> ktilde(501);
     std::vector<double> tangPos(501);
     std::vector<double> tangNeg(501);
-    /*
     for(std::size_t i=0; i<ktilde.size(); i++){
         double k{ 0.01*i };
         ktilde[i] = k;
         tangPos[i] = foo.atPos(k);
         tangNeg[i] = foo.atNeg(k);
     }
-    */
 
     bar.m_ktilde = ktilde;
     bar.m_atPos = tangPos;
@@ -130,7 +171,6 @@ int main(int argc, char** argv){
     std::vector<double> omegas(501);
     std::vector<double> freqPos(501);
     std::vector<double> freqNeg(501);
-    /*
     for(std::size_t i=0; i<interk.size(); i++){
         double k{ 0.01*i };
         interk[i] = k;
@@ -141,7 +181,6 @@ int main(int argc, char** argv){
         freqPos[i] = set.m_scalePos.freqFunction(omeg);
         freqNeg[i] = set.m_scaleNeg.freqFunction(omeg);
     }
-    */
 
 
     bar.m_interk = interk;
@@ -156,7 +195,6 @@ int main(int argc, char** argv){
     bar.m_CNeg = set.m_scaleNeg.getQuadratic();
     bar.m_deltab = set.deltab();
 
-    /*
     std::cout << "DP: \t" << bar.m_DPos << '\n';
     std::cout << "DM: \t" << bar.m_DNeg << '\n';
     std::cout << "CP: \t" << bar.m_CPos << '\n';
@@ -164,20 +202,17 @@ int main(int argc, char** argv){
     std::cout << "deltab: \t" << bar.m_deltab << '\n';
 
     std::cout << "Tangential ScaleFunction.\n";
-    */
 
     std::vector<double> kt(50);
     std::vector<double> seTang(50);
     a = std::pow(10,-2);
     c = 0.1;
     base = std::exp(std::log(c/a)/(N-1));
-    /*
     for(std::size_t i=0; i<kt.size(); i++){
         double k{ a*std::pow(base,i) };
         kt[i] = k;
         seTang[i] = set.tangValue(k);
     }
-    */
     //std::cout << "Tangential SelfEnergy.\n";
 
     bar.m_kr = kr;
@@ -195,6 +230,7 @@ int main(int argc, char** argv){
     
     std::cout << "File created: \t" << name << '\n';
     //}
+    */
 
     double tseconds{ t.elapsed() };
     int minutes{ (int)tseconds/60 };

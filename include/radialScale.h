@@ -4,6 +4,8 @@
 
 #include "selfenergy.h"
 
+// these classes provide the scaling functions for the radial momentum dependence of the self energy
+// intermediate values are accessed from spline object, otherwise we use asymptotic expressions
 class radialScalePos: public newSe{
     interpolater1d m_spline;
     double m_rightCoefficient;

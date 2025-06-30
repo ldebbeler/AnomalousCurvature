@@ -4,6 +4,8 @@
 
 #include "tangentialScale.h"
 
+// this class can be used to calculate the real part self energy by kramers kronig
+// in practice, we do an expansion instead of the full integral
 class seTang{
     double m_T;
 
