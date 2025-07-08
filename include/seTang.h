@@ -13,7 +13,6 @@ public:
     tangentialScalePos m_scalePos;
     tangentialScaleNeg m_scaleNeg;
 
-private:
     double m_Apos;
     double m_Aneg;
     double m_Cpos;
@@ -21,7 +20,6 @@ private:
     double m_Dpos;
     double m_Dneg;
 
-public:
     seTang(double T);
 
     double etaIntegrand(double kt, double omega);

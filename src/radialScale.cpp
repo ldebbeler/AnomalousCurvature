@@ -1,6 +1,6 @@
 #include "radialScale.h"
 
-radialScalePos::radialScalePos(double T): newSe(T), m_spline(radPosSpline()), 
+radialScalePos::radialScalePos(double T): selfenergy(T), m_spline(radPosSpline()), 
     m_rightCoefficient(radAsymptoticPos()), m_leftCoefficient(radAsymptoticNeg()) {}
 
 double radialScalePos::asymptoticLeft(double kr){
@@ -23,7 +23,7 @@ double radialScalePos::evaluate(double kr){
     }
 }
 
-radialScaleNeg::radialScaleNeg(double T): newSe(T), m_spline(radNegSpline()), 
+radialScaleNeg::radialScaleNeg(double T): selfenergy(T), m_spline(radNegSpline()), 
     m_rightCoefficient(radAsymptoticPos()), m_leftCoefficient(radAsymptoticNeg()) {}
 
 double radialScaleNeg::asymptoticLeft(double kr){

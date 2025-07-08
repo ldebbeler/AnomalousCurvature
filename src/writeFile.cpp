@@ -54,22 +54,18 @@ void writeNew::writeMainResults(H5::H5File file){
     write1dvector(file, "/BubbleScale/Variable", m_scaling.m_x);
     write1dvector(file, "/BubbleScale/Real", m_scaling.m_real);
     write1dvector(file, "/BubbleScale/Imag", m_scaling.m_imag);
-    write1dvector(file, "/BubbleScale/ImagDeriv", m_scaling.m_imagDeriv);
     
     H5::Attribute tangential_exponent = scaling.createAttribute( "alphaT", double_type, att_space );
     tangential_exponent.write( double_type, &m_scaling.m_T);
 
     H5::Group seRad = file.createGroup("/SelfEnergyRadial");
 
+    write1dvector(file, "/SelfEnergyRadial/krt", m_scaling.m_krt);
     write1dvector(file, "/SelfEnergyRadial/arPos", m_scaling.m_arPos);
     write1dvector(file, "/SelfEnergyRadial/arNeg", m_scaling.m_arNeg);
-    write1dvector(file, "/SelfEnergyRadial/radInterPos", m_scaling.m_radInterPos);
-    write1dvector(file, "/SelfEnergyRadial/radInterNeg", m_scaling.m_radInterNeg);
-
     write1dvector(file, "/SelfEnergyRadial/kr", m_scaling.m_kr);
-    write1dvector(file, "/SelfEnergyRadial/seRadPos", m_scaling.m_seRadPos);
-    write1dvector(file, "/SelfEnergyRadial/seRadNeg", m_scaling.m_seRadNeg);
- 
+    write1dvector(file, "/SelfEnergyRadial/seRad", m_scaling.m_seRad);
+
     H5::Group se = file.createGroup("/SelfEnergy");
 
     H5::Attribute apos = se.createAttribute("aPos", double_type, att_space);
@@ -89,29 +85,23 @@ void writeNew::writeMainResults(H5::H5File file){
 
     H5::Group seTang = file.createGroup("/SelfEnergyTangential");
 
-    write1dvector(file, "/SelfEnergyTangential/ktilde", m_scaling.m_ktilde);
+    write1dvector(file, "/SelfEnergyTangential/ktilde", m_scaling.m_ktt);
     write1dvector(file, "/SelfEnergyTangential/atPos", m_scaling.m_atPos);
     write1dvector(file, "/SelfEnergyTangential/atNeg", m_scaling.m_atNeg);
-    write1dvector(file, "/SelfEnergyTangential/interk", m_scaling.m_interk);
-    write1dvector(file, "/SelfEnergyTangential/subtractPos", m_scaling.m_subtractPos);
-    write1dvector(file, "/SelfEnergyTangential/subtractNeg", m_scaling.m_subtractNeg);
-    write1dvector(file, "/SelfEnergyTangential/freqs", m_scaling.m_tangFreqs);
-    write1dvector(file, "/SelfEnergyTangential/freqPos", m_scaling.m_tangFreqPos);
-    write1dvector(file, "/SelfEnergyTangential/freqNeg", m_scaling.m_tangFreqNeg);
     write1dvector(file, "/SelfEnergyTangential/kt", m_scaling.m_kt);
     write1dvector(file, "/SelfEnergyTangential/seTang", m_scaling.m_seTang);
 
     H5::Attribute dpos = seTang.createAttribute("DPos", double_type, att_space);
-    dpos.write( double_type, &m_scaling.m_DPos);
+    dpos.write( double_type, &m_scaling.m_Dpos);
  
     H5::Attribute dneg = seTang.createAttribute("DNeg", double_type, att_space);
-    dneg.write( double_type, &m_scaling.m_DNeg);
+    dneg.write( double_type, &m_scaling.m_Dneg);
  
     H5::Attribute cpos = seTang.createAttribute("CPos", double_type, att_space);
-    cpos.write( double_type, &m_scaling.m_CPos);
+    cpos.write( double_type, &m_scaling.m_Cpos);
  
     H5::Attribute cneg = seTang.createAttribute("CNeg", double_type, att_space);
-    cneg.write( double_type, &m_scaling.m_CNeg);
+    cneg.write( double_type, &m_scaling.m_Cneg);
 
     H5::Attribute deltab = seTang.createAttribute("deltab", double_type, att_space);
     deltab.write( double_type, &m_scaling.m_deltab);

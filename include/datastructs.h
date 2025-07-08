@@ -6,45 +6,47 @@ struct scalingValues{
     double m_T;
 
     // bubble scaling function
-    std::vector<double> m_x;       
-    std::vector<double> m_real;   
-    std::vector<double> m_imag;  
-    std::vector<double> m_imagDeriv;
+    std::vector<double> m_x;
+    std::vector<double> m_real;
+    std::vector<double> m_imag;
+
+    // frequency dependence self energy
+    double m_apos;
+    double m_aneg;
 
     // radial self energy scaling function
+    std::vector<double> m_krt;
     std::vector<double> m_arPos;
     std::vector<double> m_arNeg;
-    std::vector<double> m_radInterPos;
-    std::vector<double> m_radInterNeg;
 
-    // radial self energy
+    // real part radial self energy
     std::vector<double> m_kr;
-    std::vector<double> m_seRadPos;
-    std::vector<double> m_seRadNeg;
+    std::vector<double> m_seRad;
 
     // tangential self energy scaling function
-    std::vector<double> m_ktilde;
+    std::vector<double> m_ktt;
     std::vector<double> m_atPos;
     std::vector<double> m_atNeg;
+
+    //real part tangential self energy
+    std::vector<double> m_kt;
+    std::vector<double> m_seTang;
+
+    double m_deltab;
+    double m_Cpos;
+    double m_Cneg;
+    double m_Dpos;
+    double m_Dneg;
+
+    /*
     std::vector<double> m_interk;
     std::vector<double> m_subtractPos;
     std::vector<double> m_subtractNeg;
     std::vector<double> m_tangFreqs;
     std::vector<double> m_tangFreqPos;
     std::vector<double> m_tangFreqNeg;
-    double m_DPos;
-    double m_DNeg;
-    double m_CPos;
-    double m_CNeg;
-    double m_deltab;
+    */
 
-    // tangential self energy
-    std::vector<double> m_kt;
-    std::vector<double> m_seTang;
-
-    // frequency dependence self energy
-    double m_apos;
-    double m_aneg;
 }; 
 
 struct selfEnergyValues{

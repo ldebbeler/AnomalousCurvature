@@ -6,7 +6,7 @@
 #include <complex>
 
 //const std::string fileName{ "data/foo108.h5" };
-const std::string prefix{ "data/refined" };
+const std::string prefix{ "data/test_bubble1_" };
 const std::string suffix{ ".h5" };
 
 //const std::string name{ "data/numBubble3.h5" };
@@ -17,7 +17,7 @@ const std::string suffix{ ".h5" };
 inline constexpr std::complex<double> I{ std::complex<double>(0.0,1.0) };   // imaginary unit
 inline constexpr double vF{ 1.0 };  // Fermi Velocity
 inline constexpr double b{ 1.0 };   // tangential dispersion coefficient
-inline constexpr double M{ 3.0 };   // density wave components, 1 for charge 3 for spin
+inline constexpr double M{ 1.0 };   // density wave components, 1 for charge 3 for spin
 inline constexpr double N{ 2.0 };   // spin multiplicity
 
 // scaling function requires rootfinding for imaginary part and 1d integral for real part

@@ -1,6 +1,6 @@
-//File: newSe.h
-#ifndef NEWSE_H
-#define NEWSE_H
+//File: selfenergy.h
+#ifndef SELFENERGY_H
+#define SELFENERGY_H
 
 #include "bubbleScale.h"
 
@@ -8,20 +8,20 @@ template <typename T> int sgn(T val){
     return (T(0) < val) - (val < T(0));
 }
 
-class newSe{
+class selfenergy{
     double m_T;
     bubbleScaleReal m_scaleReal;
     bubbleScaleImag m_scaleImag;
 
 public:
-    newSe(double T);
+    selfenergy(double T);
     
-private:
     // return complex value of bubble scaling function
     std::complex<double> bubbleScale(double x);
     // returns exact form of known function for alpha=4
     std::complex<double> exactBubbleQuartic(double x);
     // return first derivative of imaginary part, required for asymptotic formulas
+private:
     double imagBubbleDeriv(double x);
     double exactDerivQuartic(double x);
 
@@ -84,4 +84,4 @@ public:
 };
 
 
-#endif //NEWSE_H
+#endif //SELFENERGY_H

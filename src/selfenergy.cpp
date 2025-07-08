@@ -6,13 +6,13 @@
 #include "linearFit.h"
 #include<iostream>
 
-newSe::newSe(double T): m_T(T), m_scaleReal(bubbleScaleReal(T)), m_scaleImag(bubbleScaleImag(T)) {}
+selfenergy::selfenergy(double T): m_T(T), m_scaleReal(bubbleScaleReal(T)), m_scaleImag(bubbleScaleImag(T)) {}
 
-std::complex<double> newSe::bubbleScale(double x){
+std::complex<double> selfenergy::bubbleScale(double x){
     return m_scaleReal.evaluate(x) + I*m_scaleImag.evaluate(x);
 }
 
-std::complex<double> newSe::exactBubbleQuartic(double x){
+std::complex<double> selfenergy::exactBubbleQuartic(double x){
     if(x<0.125){
         return 1.0/M_PI*std::sqrt(3.0/2.0+std::sqrt(std::abs(0.25-2.0*x)));
     }
@@ -21,7 +21,7 @@ std::complex<double> newSe::exactBubbleQuartic(double x){
     }
 }
 
-double newSe::imagBubbleDeriv(double x){
+double selfenergy::imagBubbleDeriv(double x){
     if(x<std::pow(2,1.0-m_T)){
         return 0.0;
     }
@@ -32,7 +32,7 @@ double newSe::imagBubbleDeriv(double x){
     }
 }
 
-double newSe::exactDerivQuartic(double x){
+double selfenergy::exactDerivQuartic(double x){
     if(x<1/8){
         return 0.0;
     }
@@ -41,19 +41,19 @@ double newSe::exactDerivQuartic(double x){
     }
 }
 
-std::complex<double> newSe::freqIntegrandPos(double qr, double qt){
+std::complex<double> selfenergy::freqIntegrandPos(double qr, double qt){
     double x1{ (std::pow(std::abs(qt),m_T)-1.0)/(std::pow(std::abs(qt),m_T)) };
     double x2{ (-2*qr+std::pow(std::abs(qt),m_T)+1.0)/(std::pow(std::abs(qt),m_T)) };
     return -8.0/(std::abs(qt)*(bubbleScale(x1)+std::conj(bubbleScale(x2))));
 }
 
-std::complex<double> newSe::freqIntegrandNeg(double qr, double qt){
+std::complex<double> selfenergy::freqIntegrandNeg(double qr, double qt){
     double x1{ (std::pow(std::abs(qt),m_T)+1.0)/(std::pow(std::abs(qt),m_T)) };
     double x2{ (2*qr+std::pow(std::abs(qt),m_T)-1.0)/(std::pow(std::abs(qt),m_T)) };
     return 8.0/(std::abs(qt)*(bubbleScale(x1)+std::conj(bubbleScale(x2))));
 }
 
-double newSe::Apos(){
+double selfenergy::Apos(){
     auto integ = [&] (double2 Q) -> std::complex<double>{
         double Qr = Q.x;
         double Qt = Q.y;
@@ -62,7 +62,7 @@ double newSe::Apos(){
     return integrate2Dmeasure2pi(std::log(IR),std::log(0.5),std::log(IR),std::log(UV)).integrate(integ).real();
 }
 
-double newSe::Aneg(){
+double selfenergy::Aneg(){
     auto integ = [&] (double2 Q) -> std::complex<double>{
         double Qr = Q.x;
         double Qt = Q.y;
@@ -71,21 +71,21 @@ double newSe::Aneg(){
     return integrate2Dmeasure2pi(std::log(IR),std::log(0.5),std::log(IR),std::log(UV)).integrate(integ).real();
 }
 
-std::complex<double> newSe::radIntegrandPos(double qr, double qt, double kr){
+std::complex<double> selfenergy::radIntegrandPos(double qr, double qt, double kr){
     // factor 2 for symmetric qt integral
     double x1{ (std::pow(std::abs(qt),m_T)-kr-1.0)/(std::pow(std::abs(qt),m_T)) };
     double x2{ (-2*qr-kr+std::pow(std::abs(qt),m_T)+1.0)/(std::pow(std::abs(qt),m_T)) };
     return -8.0/(std::abs(qt)*(bubbleScale(x1)+std::conj(bubbleScale(x2))));
 }
 
-std::complex<double> newSe::radIntegrandNeg(double qr, double qt, double kr){
+std::complex<double> selfenergy::radIntegrandNeg(double qr, double qt, double kr){
     // factor 2 for symmetric qt integral
     double x1{ (std::pow(std::abs(qt),m_T)-kr+1.0)/(std::pow(std::abs(qt),m_T)) };
     double x2{ (2*qr-kr+std::pow(std::abs(qt),m_T)-1.0)/(std::pow(std::abs(qt),m_T)) };
     return 8.0/(std::abs(qt)*(bubbleScale(x1)+std::conj(bubbleScale(x2))));
 }
 
-double newSe::arPos(double kr){
+double selfenergy::arPos(double kr){
     auto integ = [&] (double2 Q) -> std::complex<double>{
         double Qr = Q.x;
         double Qt = Q.y;
@@ -93,10 +93,11 @@ double newSe::arPos(double kr){
         return std::exp(Qt)*(radIntegrandPos(Qr,std::exp(Qt),kr).imag());
     };
     //return integrate2Dmeasure2pi(std::log(IR),std::log(0.5),std::log(IR),std::log(UV)).integrate(integ).real();
-    return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ).real();
+    //return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ).real();
+    return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ, prec2d, steps2d).real();
 }
 
-double newSe::arNeg(double kr){
+double selfenergy::arNeg(double kr){
     auto integ = [&] (double2 Q) -> std::complex<double>{
         double Qr = Q.x;
         double Qt = Q.y;
@@ -104,10 +105,11 @@ double newSe::arNeg(double kr){
         return std::exp(Qt)*(radIntegrandNeg(Qr,std::exp(Qt),kr)).imag();
     };
     //return integrate2Dmeasure2pi(std::log(IR),std::log(0.5),std::log(IR),std::log(UV)).integrate(integ).real();
+    //return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ).real();
     return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ, prec2d, steps2d).real();
 }
 
-interpolater1d newSe::radPosSpline(){
+interpolater1d selfenergy::radPosSpline(){
     std::vector<double> x(nodesR);
     std::vector<double> f(nodesR);
     double k{ 2*LambdaR/(nodesR-1) };
@@ -120,7 +122,7 @@ interpolater1d newSe::radPosSpline(){
     return foo;
 }
 
-interpolater1d newSe::radNegSpline(){
+interpolater1d selfenergy::radNegSpline(){
     std::vector<double> x(nodesR);
     std::vector<double> f(nodesR);
     double k{ 2*LambdaR/(nodesR-1) };
@@ -133,22 +135,22 @@ interpolater1d newSe::radNegSpline(){
     return foo;
 }
 
-double newSe::asymptoticIntegrand(double qt, double sk){
+double selfenergy::asymptoticIntegrand(double qt, double sk){
     double x{ (std::pow(std::abs(qt),m_T)-sk)/(std::pow(std::abs(qt),m_T)) };
     return -1.0/(4*M_PI*M_PI)*imagBubbleDeriv(x)/(std::pow(std::abs(qt),m_T+1.0)*std::pow(std::abs(m_scaleReal.evaluate(x)),2.0));
 }
 
-double newSe::radAsymptoticPos(){
+double selfenergy::radAsymptoticPos(){
     auto integ = [&] (double Q) -> double{ return 2.0*std::exp(Q)*asymptoticIntegrand(std::exp(Q),1.0); };
     return integrater().integrate(integ, std::log(IR), std::log(UV));
 }
 
-double newSe::radAsymptoticNeg(){
+double selfenergy::radAsymptoticNeg(){
     auto integ = [&] (double Q) -> double{ return 2.0*std::exp(Q)*asymptoticIntegrand(std::exp(Q),-1.0); };
     return integrater().integrate(integ, std::log(IR), std::log(UV));
 }
 
-std::complex<double> newSe::tangIntegrandPos(double qr, double qt, double kt){
+std::complex<double> selfenergy::tangIntegrandPos(double qr, double qt, double kt){
     // qt Integral here not symmetric
     double x1{ (std::pow(std::abs(kt-qt),m_T)-1.0)/(std::pow(std::abs(qt),m_T)) };
     double x2{ (-2*qr+std::pow(std::abs(kt-qt),m_T)+1.0)/(std::pow(std::abs(qt),m_T)) };
@@ -160,7 +162,7 @@ std::complex<double> newSe::tangIntegrandPos(double qr, double qt, double kt){
     }
 }
 
-std::complex<double> newSe::tangIntegrandNeg(double qr, double qt, double kt){
+std::complex<double> selfenergy::tangIntegrandNeg(double qr, double qt, double kt){
     // qt Integral here not symmetric
     double x1{ (std::pow(std::abs(kt-qt),m_T)+1.0)/(std::pow(std::abs(qt),m_T)) };
     double x2{ (2*qr+std::pow(std::abs(kt-qt),m_T)-1.0)/(std::pow(std::abs(qt),m_T)) };
@@ -172,25 +174,27 @@ std::complex<double> newSe::tangIntegrandNeg(double qr, double qt, double kt){
     }
 }
 
-double newSe::atPos(double kt){
+double selfenergy::atPos(double kt){
     auto integ = [&] (double2 Q) -> std::complex<double>{
         double Qr = Q.x;
         double Qt = Q.y;
         return std::exp(Qt)*(tangIntegrandPos(Qr,std::exp(Qt),kt).imag() + tangIntegrandPos(Qr,-std::exp(Qt),kt).imag());
     };
-    return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ).real();
+    //return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ).real();
+    return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ,prec2d, steps2d).real();
 }
 
-double newSe::atNeg(double kt){
+double selfenergy::atNeg(double kt){
     auto integ = [&] (double2 Q) -> std::complex<double>{
         double Qr = Q.x;
         double Qt = Q.y;
         return std::exp(Qt)*(tangIntegrandNeg(Qr,std::exp(Qt),kt).imag() + tangIntegrandNeg(Qr,-std::exp(Qt),kt).imag());
     };
-    return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ).real();
+    //return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ).real();
+    return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ,prec2d, steps2d).real();
 }
 
-double newSe::atPosSubtract(double kt){
+double selfenergy::atPosSubtract(double kt){
     auto integ = [&] (double2 Q) -> std::complex<double>{
         double Qr = Q.x;
         double Qt = Q.y;
@@ -200,7 +204,7 @@ double newSe::atPosSubtract(double kt){
     return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ).real();
 }
 
-double newSe::atNegSubtract(double kt){
+double selfenergy::atNegSubtract(double kt){
     auto integ = [&] (double2 Q) -> std::complex<double>{
         double Qr = Q.x;
         double Qt = Q.y;
@@ -210,7 +214,7 @@ double newSe::atNegSubtract(double kt){
     return integrate2Dmeasure2pi(0.0,1.0,std::log(IR2d),std::log(UV2d)).integrate(integ).real();
 }
 
-interpolater1d newSe::tangPosSpline(){
+interpolater1d selfenergy::tangPosSpline(){
     std::vector<double> x(nodesT);
     std::vector<double> f(nodesT);
     double k{ LambdaT/(nodesT-1) };
@@ -223,7 +227,7 @@ interpolater1d newSe::tangPosSpline(){
     return foo;
 }
 
-interpolater1d newSe::tangNegSpline(){
+interpolater1d selfenergy::tangNegSpline(){
     std::vector<double> x(nodesT);
     std::vector<double> f(nodesT);
     double k{ LambdaT/(nodesT-1) };
@@ -236,18 +240,18 @@ interpolater1d newSe::tangNegSpline(){
     return foo;
 }
 
-double newSe::tangAsymptoticIntegrand(double qt){
+double selfenergy::tangAsymptoticIntegrand(double qt){
     double x{ (std::pow(std::abs(1.0-qt),m_T))/(std::pow(std::abs(qt),m_T)) };
     return -1.0/(4*M_PI*M_PI)*imagBubbleDeriv(x)/(std::pow(std::abs(qt),m_T+1.0)*std::pow(std::abs(m_scaleReal.evaluate(x)),2.0));
 }
 
 // this is not subtracted yet!
-double newSe::tangAsymptotic(){
+double selfenergy::tangAsymptotic(){
     auto integ = [&] (double Q) -> double{ return std::exp(Q)*(tangAsymptoticIntegrand(std::exp(Q))+tangAsymptoticIntegrand(-std::exp(Q))); };
     return integrater().integrate(integ, std::log(IR), std::log(UV));
 }
 
-double newSe::posQuadratic(){
+double selfenergy::posQuadratic(){
     // do quadratic regression for small kt
     // return coefficient. no constant term: use subtracted function
     std::vector<double> kt2(100);
@@ -261,7 +265,7 @@ double newSe::posQuadratic(){
     return regress.slope_noConstant();
 }
 
-double newSe::negQuadratic(){
+double selfenergy::negQuadratic(){
     std::vector<double> kt2(100);
     std::vector<double> atNeg(100);
     for(std::size_t i=0; i<kt2.size(); i++){
@@ -273,7 +277,7 @@ double newSe::negQuadratic(){
     return regress.slope_noConstant();
 }
 
-double newSe::posQuartic(){
+double selfenergy::posQuartic(){
     // do quadratic regression for deltaA/kt^2
     // return coefficient.
     std::vector<double> kt2(quarticNodes);
@@ -287,7 +291,7 @@ double newSe::posQuartic(){
     return regress.slope_regular();
 }
 
-double newSe::negQuartic(){
+double selfenergy::negQuartic(){
     std::vector<double> kt2(quarticNodes);
     std::vector<double> atNegDivide(quarticNodes);
     for(std::size_t i=0; i<kt2.size(); i++){

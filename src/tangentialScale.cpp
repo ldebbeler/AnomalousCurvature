@@ -1,6 +1,6 @@
 #include "tangentialScale.h"
 
-tangentialScalePos::tangentialScalePos(double T): newSe(T), m_T(T), m_quart((m_T>2.5)?0.7:0.5), m_spline(tangPosSpline()),
+tangentialScalePos::tangentialScalePos(double T): selfenergy(T), m_T(T), m_quart((m_T>2.5)?0.7:0.5), m_spline(tangPosSpline()),
     m_asymptoticCoefficient(tangAsymptotic()), m_quadraticCoefficient(posQuadratic()), m_zeroValue(atPos(0.0)),
     m_quarticCoefficient(posQuartic()) {}
 
@@ -34,7 +34,7 @@ double tangentialScalePos::freqFunction(double omega){
     return evaluate(std::pow(b/omega,1.0/m_T));
 }
 
-tangentialScaleNeg::tangentialScaleNeg(double T): newSe(T), m_T(T), m_quart((m_T>2.5)?0.7:0.5), m_spline(tangNegSpline()),
+tangentialScaleNeg::tangentialScaleNeg(double T): selfenergy(T), m_T(T), m_quart((m_T>2.5)?0.7:0.5), m_spline(tangNegSpline()),
     m_asymptoticCoefficient(tangAsymptotic()), m_quadraticCoefficient(negQuadratic()), m_zeroValue(atNeg(0.0)),
     m_quarticCoefficient(negQuartic()) {}
 

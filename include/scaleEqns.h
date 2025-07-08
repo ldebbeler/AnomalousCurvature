@@ -17,8 +17,8 @@ private:
     double rootEqn(double kt, double x);
     double ktzero(double x);
     // direct imaginary value for argument x
-    double imagValue(double x);
 public:
+    double imagValue(double x);
     // asymptotic behavior for large absolute values
     double imagAsymptotic(double x);
     // spline object for intermediate values
@@ -27,8 +27,8 @@ public:
 private:
     double realIntegrand(double kt, double x);
     // direct real value for argument x
-    double realValue(double x);
 public:
+    double realValue(double x);
     // asymptotic behavior for large absolute values
     double realAsymptotic(double x);
     // spline object for intermediate values

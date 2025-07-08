@@ -4,7 +4,7 @@
 
 #include "selfenergy.h"
 
-class tangentialScalePos: public newSe{
+class tangentialScalePos: public selfenergy{
     double m_T;
 public:
     double m_quart;
@@ -29,7 +29,7 @@ public:
     double freqFunction(double omega);
 };
 
-class tangentialScaleNeg: public newSe{
+class tangentialScaleNeg: public selfenergy{
     double m_T;
     double m_quart;
     interpolater1d m_spline;        // spline through (0,0)
