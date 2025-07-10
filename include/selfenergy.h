@@ -56,6 +56,9 @@ public:
     double radAsymptoticPos();
     double radAsymptoticNeg();
 
+    double posSlope();
+    double negSlope();
+
 private:
     // tangential momentum dependence
     std::complex<double> tangIntegrandPos(double qr, double qt, double kt);
@@ -81,6 +84,8 @@ public:
 
     double posQuartic();
     double negQuartic();
+
+    //double deltab();
 };
 
 

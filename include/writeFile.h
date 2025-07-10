@@ -8,11 +8,11 @@
 
 class writeNew {
     scalingValues m_scaling;
-    selfEnergyValues m_sev;
+    coefficients m_sev;
 
 public:
     writeNew(const scalingValues& scaling);
-    writeNew(const selfEnergyValues& sev);
+    writeNew(const coefficients& sev);
     writeNew();
 
 private:
@@ -26,7 +26,8 @@ public:
     void writeMainResults(H5::H5File file);  
 
     void writeSe(H5::H5File file);
-    //void writeFunc(H5::H5File file, const std::vector<double>& kr, const std::vector<double>& funcPos, const std::vector<double>& funcNeg);
+
+    void writeCoefficients(H5::H5File file);
 };    
 
 #endif //WRITENEW_H

@@ -150,6 +150,32 @@ double selfenergy::radAsymptoticNeg(){
     return integrater().integrate(integ, std::log(IR), std::log(UV));
 }
 
+double selfenergy::posSlope(){
+    // do linear regression for small kr
+    // return slope
+    std::vector<double> kr(11);
+    std::vector<double> ar(11);
+    for(std::size_t i=0; i<kr.size(); i++){
+        double k{ -0.1 + 0.02*i };
+        kr[i] = k;
+        ar[i] = arPos(k);
+    }
+    linearFit regress(kr, ar);
+    return regress.slope_regular();
+}
+
+double selfenergy::negSlope(){
+    std::vector<double> kr(11);
+    std::vector<double> ar(11);
+    for(std::size_t i=0; i<kr.size(); i++){
+        double k{ -0.1 + 0.02*i };
+        kr[i] = k;
+        ar[i] = arNeg(k);
+    }
+    linearFit regress(kr, ar);
+    return regress.slope_regular();
+}
+
 std::complex<double> selfenergy::tangIntegrandPos(double qr, double qt, double kt){
     // qt Integral here not symmetric
     double x1{ (std::pow(std::abs(kt-qt),m_T)-1.0)/(std::pow(std::abs(qt),m_T)) };
@@ -303,3 +329,15 @@ double selfenergy::negQuartic(){
     return regress.slope_regular();
 }
 
+/*
+double selfenergy::deltab(){
+    if(m_T > 3.99 || m_T < 2.01){ return 0.0; }
+    double low{ std::pow(LambdaT, -m_T) };
+    double high{ std::pow(m_scalePos.m_quart,-m_T) };
+    double uvContribution{ M/(N*M_PI)*(m_Dneg-m_Dpos)/(4.0/m_T-1.0)*std::pow(high,1.0-4.0/m_T) };
+    double irContribution{ M/(N*M_PI)*((m_Apos-m_Aneg)*low + (m_Cpos-m_Cneg)/(1.0-2.0/m_T)*std::pow(low,1.0-2.0/m_T)) };
+    auto integ = [&] (double omega) -> double{ return M/(N*M_PI)*bIntegrand(omega); };
+    double intermediateContribution{ integrater().integrate(integ, low, high) };
+    return uvContribution + irContribution + intermediateContribution;
+}
+*/

@@ -5,7 +5,7 @@
 
 writeNew::writeNew(const scalingValues& scaling): m_scaling(scaling) {}
 
-writeNew::writeNew(const selfEnergyValues& sev): m_sev(sev) {}
+writeNew::writeNew(const coefficients& sev): m_sev(sev) {}
 
 writeNew::writeNew() {}
 
@@ -106,5 +106,19 @@ void writeNew::writeMainResults(H5::H5File file){
     H5::Attribute deltab = seTang.createAttribute("deltab", double_type, att_space);
     deltab.write( double_type, &m_scaling.m_deltab);
  
+}
+
+void writeNew::writeCoefficients(H5::H5File file){
+    H5::Group group = file.createGroup("/Coefficients");
+    write1dvector(file, "/Coefficients/at", m_sev.m_at);
+    write1dvector(file, "/Coefficients/APos", m_sev.m_apos);
+    write1dvector(file, "/Coefficients/ANeg", m_sev.m_aneg);
+    write1dvector(file, "/Coefficients/BPos", m_sev.m_bpos);
+    write1dvector(file, "/Coefficients/BNeg", m_sev.m_bneg);
+    write1dvector(file, "/Coefficients/CPos", m_sev.m_cpos);
+    write1dvector(file, "/Coefficients/CNeg", m_sev.m_cneg);
+    write1dvector(file, "/Coefficients/DPos", m_sev.m_dpos);
+    write1dvector(file, "/Coefficients/DNeg", m_sev.m_dneg);
+    write1dvector(file, "/Coefficients/deltab", m_sev.m_deltab);
 }
 

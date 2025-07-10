@@ -38,21 +38,19 @@ struct scalingValues{
     double m_Dpos;
     double m_Dneg;
 
-    /*
-    std::vector<double> m_interk;
-    std::vector<double> m_subtractPos;
-    std::vector<double> m_subtractNeg;
-    std::vector<double> m_tangFreqs;
-    std::vector<double> m_tangFreqPos;
-    std::vector<double> m_tangFreqNeg;
-    */
-
 }; 
 
-struct selfEnergyValues{
+struct coefficients{
     std::vector<double> m_at;
     std::vector<double> m_apos;
     std::vector<double> m_aneg;
+    std::vector<double> m_bpos;
+    std::vector<double> m_bneg;
+    std::vector<double> m_cpos;
+    std::vector<double> m_cneg;
+    std::vector<double> m_dpos;
+    std::vector<double> m_dneg;
+    std::vector<double> m_deltab;
 };
 
 
