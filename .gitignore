@@ -4,3 +4,12 @@
 /data/*.pdf
 /data/*.h5
 /data/Graphics/
+/data/Results.ipynb
+/data/Results_AllCoefficients.ipynb
+/data/Results_AllCoefficients-Copy1.ipynb
+/data/Results_AllCoefficients_DarkMode.ipynb
+/data/bubbleScale.ipynb
+/data/bubbleScale_darkMode.ipynb
+/data/deltaB_Results.ipynb
+/data/refined_deltab.ipynb
+/data/refined_deltab_dark.ipynb
